@@ -1,13 +1,4 @@
-/* =========================================================
-   FELIPE — FOTOGRAFÍA Y VIDEO
-   ========================================================= */
-
-/* ---------------------------------------------------------
-   1. RESET & BASE
-   --------------------------------------------------------- */
-*,
-*::before,
-*::after {
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -68,9 +59,6 @@ body::after {
   83%      { transform: translate3d(-1%, -3%, 0); }
 }
 
-/* ---------------------------------------------------------
-   2. DESIGN TOKENS
-   --------------------------------------------------------- */
 :root {
   --bg: #0c0c0e;
   --bg-elev: #141416;
@@ -88,9 +76,6 @@ body::after {
   :root { --nav-h: 76px; }
 }
 
-/* ---------------------------------------------------------
-   3. TIPOGRAFÍA
-   --------------------------------------------------------- */
 h1, h2, h3 {
   font-family: 'Lora', Georgia, 'Times New Roman', serif;
   font-weight: 500;
@@ -113,9 +98,6 @@ h2 {
   font-size: clamp(0.94rem, 0.9rem + 0.25vw, 1.04rem);
 }
 
-/* ---------------------------------------------------------
-   4. UTILIDADES
-   --------------------------------------------------------- */
 .container {
   width: 100%;
   max-width: 1240px;
@@ -157,9 +139,7 @@ h2 {
 .reveal {
   opacity: 0;
   transform: translate3d(0, 26px, 0);
-  transition:
-    opacity 1.1s var(--ease-out),
-    transform 1.1s var(--ease-out);
+  transition: opacity 1.1s var(--ease-out), transform 1.1s var(--ease-out);
   will-change: opacity, transform;
 }
 
@@ -192,9 +172,6 @@ h2 {
   outline-offset: 2px;
 }
 
-/* ---------------------------------------------------------
-   5. COMPONENTES
-   --------------------------------------------------------- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -208,11 +185,7 @@ h2 {
   border-radius: 1px;
   border: 1px solid transparent;
   cursor: pointer;
-  transition:
-    background-color 0.4s var(--ease-out),
-    color 0.4s var(--ease-out),
-    border-color 0.4s var(--ease-out),
-    transform 0.4s var(--ease-out);
+  transition: background-color 0.4s var(--ease-out), color 0.4s var(--ease-out), border-color 0.4s var(--ease-out), transform 0.4s var(--ease-out);
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -294,9 +267,6 @@ h2 {
   }
 }
 
-/* ---------------------------------------------------------
-   6. NAV
-   --------------------------------------------------------- */
 .nav {
   position: fixed;
   top: 0;
@@ -306,10 +276,7 @@ h2 {
   padding: 20px 0;
   padding-top: max(20px, env(safe-area-inset-top));
   border-bottom: 1px solid transparent;
-  transition:
-    background-color 0.45s var(--ease-out),
-    padding 0.45s var(--ease-out),
-    border-color 0.45s var(--ease-out);
+  transition: background-color 0.45s var(--ease-out), padding 0.45s var(--ease-out), border-color 0.45s var(--ease-out);
 }
 
 @media (min-width: 900px) {
@@ -428,9 +395,6 @@ h2 {
   .nav__cta:hover svg { transform: translateX(3px); }
 }
 
-/* ---------------------------------------------------------
-   7. HERO
-   --------------------------------------------------------- */
 .hero {
   position: relative;
   isolation: isolate;
@@ -509,24 +473,20 @@ h2 {
   inset: 0;
   z-index: -2;
   pointer-events: none;
-  background: linear-gradient(
-    180deg,
+  background: linear-gradient(180deg,
     rgba(10, 10, 12, 0.5) 0%,
     rgba(10, 10, 12, 0.15) 30%,
     rgba(10, 10, 12, 0.5) 70%,
-    rgba(10, 10, 12, 0.97) 100%
-  );
+    rgba(10, 10, 12, 0.97) 100%);
 }
 
 @media (max-width: 640px) {
   .hero__overlay {
-    background: linear-gradient(
-      180deg,
+    background: linear-gradient(180deg,
       rgba(10, 10, 12, 0.45) 0%,
       rgba(10, 10, 12, 0.1) 25%,
       rgba(10, 10, 12, 0.55) 55%,
-      rgba(10, 10, 12, 0.98) 100%
-    );
+      rgba(10, 10, 12, 0.98) 100%);
   }
 }
 
@@ -666,9 +626,6 @@ html[data-hero="error"] .hero__warning { display: block; }
   to   { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
-/* ---------------------------------------------------------
-   8. SECCIONES
-   --------------------------------------------------------- */
 section { padding: 80px 0; }
 
 @media (min-width: 640px)  { section { padding: 110px 0; } }
@@ -676,7 +633,6 @@ section { padding: 80px 0; }
 @media (min-width: 1200px) { section { padding: 140px 0; } }
 @media (min-width: 2000px) { section { padding: 170px 0; } }
 
-/* ----- Portfolio ----- */
 .portfolio {
   background: var(--bg);
   border-top: 1px solid var(--line);
@@ -746,7 +702,6 @@ section { padding: 80px 0; }
   }
 }
 
-/* ----- Servicios ----- */
 .services {
   background: var(--bg-elev);
   border-top: 1px solid var(--line);
@@ -846,7 +801,6 @@ section { padding: 80px 0; }
   .services__list { column-gap: 64px; }
 }
 
-/* ----- Video ----- */
 .video-section {
   background: var(--bg);
   border-top: 1px solid var(--line);
@@ -887,7 +841,6 @@ section { padding: 80px 0; }
   .video-frame { max-width: 840px; }
 }
 
-/* ----- CTA final ----- */
 .final-cta {
   background: var(--bg-elev);
   border-top: 1px solid var(--line);
@@ -926,9 +879,6 @@ section { padding: 80px 0; }
   margin: 0 auto 36px;
 }
 
-/* ---------------------------------------------------------
-   9. FOOTER
-   --------------------------------------------------------- */
 .footer {
   border-top: 1px solid var(--line);
   padding: 32px 0;
@@ -941,9 +891,49 @@ section { padding: 80px 0; }
 
 @media (min-width: 640px) { .footer { padding: 36px 0; font-size: 0.78rem; } }
 
-/* ---------------------------------------------------------
-   10. ACCESIBILIDAD & MOTION
-   --------------------------------------------------------- */
+.footer__line {
+  margin: 0;
+  line-height: 1.7;
+}
+
+.footer__line + .footer__line {
+  margin-top: 4px;
+}
+
+.footer__credit {
+  font-size: 0.72rem;
+  color: var(--muted-2);
+}
+
+@media (min-width: 640px) {
+  .footer__credit { font-size: 0.74rem; }
+}
+
+.footer__credit-link {
+  color: var(--muted);
+  position: relative;
+  transition: color 0.3s var(--ease-out);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.footer__credit-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.4;
+  transition: opacity 0.3s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .footer__credit-link:hover { color: var(--accent); }
+  .footer__credit-link:hover::after { opacity: 1; }
+}
+
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;

@@ -1,51 +1,43 @@
-/* =========================================================
-   FELIPE — FOTOGRAFÍA Y VIDEO
-   ========================================================= */
-
 (function () {
   'use strict';
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const supportsIO = 'IntersectionObserver' in window;
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var supportsIO = 'IntersectionObserver' in window;
 
-  const yearEl = document.getElementById('year');
+  var yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
-  (function initHeroImage() {
-    const heroImg = document.getElementById('heroImg');
+  (function () {
+    var heroImg = document.getElementById('heroImg');
     if (!heroImg) return;
 
-    const markLoaded = () => {
+    var markLoaded = function () {
       heroImg.classList.add('is-loaded');
       document.documentElement.setAttribute('data-hero', 'loaded');
     };
 
-    const markError = () => {
+    var markError = function () {
       document.documentElement.setAttribute('data-hero', 'error');
-      console.warn(
-        '[Hero] No se pudo cargar "recursos/fondo.webp". ' +
-        'Verificá que el archivo exista dentro de la carpeta "recursos". ' +
-        'Ruta intentada: ' + heroImg.src
-      );
     };
 
     if (heroImg.complete) {
-      heroImg.naturalWidth > 0 ? markLoaded() : markError();
+      if (heroImg.naturalWidth > 0) markLoaded();
+      else markError();
     } else {
       heroImg.addEventListener('load', markLoaded, { once: true });
       heroImg.addEventListener('error', markError, { once: true });
     }
   })();
 
-  (function initNavScroll() {
-    const nav = document.getElementById('nav');
+  (function () {
+    var nav = document.getElementById('nav');
     if (!nav) return;
 
-    let ticking = false;
-    let lastState = null;
+    var ticking = false;
+    var lastState = null;
 
-    const update = () => {
-      const scrolled = window.scrollY > 24;
+    var update = function () {
+      var scrolled = window.scrollY > 24;
       if (scrolled !== lastState) {
         nav.classList.toggle('is-scrolled', scrolled);
         lastState = scrolled;
@@ -53,7 +45,7 @@
       ticking = false;
     };
 
-    const onScroll = () => {
+    var onScroll = function () {
       if (!ticking) {
         ticking = true;
         window.requestAnimationFrame(update);
@@ -64,18 +56,18 @@
     update();
   })();
 
-  (function initReveals() {
-    const items = document.querySelectorAll('.reveal');
+  (function () {
+    var items = document.querySelectorAll('.reveal');
     if (!items.length) return;
 
     if (!supportsIO || prefersReducedMotion) {
-      items.forEach((el) => el.classList.add('is-visible'));
+      for (var i = 0; i < items.length; i++) items[i].classList.add('is-visible');
       return;
     }
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
             io.unobserve(entry.target);
@@ -85,11 +77,11 @@
       { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
     );
 
-    items.forEach((el) => io.observe(el));
+    items.forEach(function (el) { io.observe(el); });
   })();
 
-  (function initVideo() {
-    const video = document.getElementById('videoPlayer');
+  (function () {
+    var video = document.getElementById('videoPlayer');
     if (!video) return;
 
     if (prefersReducedMotion) {
@@ -100,14 +92,12 @@
 
     if (!supportsIO) return;
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
           if (entry.isIntersecting) {
-            const playPromise = video.play();
-            if (playPromise && typeof playPromise.catch === 'function') {
-              playPromise.catch(() => {});
-            }
+            var p = video.play();
+            if (p && typeof p.catch === 'function') p.catch(function () {});
           } else {
             video.pause();
           }
@@ -119,54 +109,64 @@
     io.observe(video);
   })();
 
-  (function initScrollSpy() {
-    const links = Array.from(document.querySelectorAll('[data-nav]'));
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('[data-nav]'));
     if (!links.length || !supportsIO) return;
 
-    const sections = links
-      .map((link) => {
-        const id = link.getAttribute('href');
+    var sections = links
+      .map(function (link) {
+        var id = link.getAttribute('href');
         if (!id || id === '#') return null;
-        const el = document.querySelector(id);
-        return el ? { el, link } : null;
+        var el = document.querySelector(id);
+        return el ? { el: el, link: link } : null;
       })
       .filter(Boolean);
 
     if (!sections.length) return;
 
-    const setActive = (activeLink) => {
-      links.forEach((l) => l.classList.toggle('is-active', l === activeLink));
+    var setActive = function (activeLink) {
+      links.forEach(function (l) {
+        l.classList.toggle('is-active', l === activeLink);
+      });
     };
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+    var io = new IntersectionObserver(
+      function (entries) {
+        var visible = entries
+          .filter(function (e) { return e.isIntersecting; })
+          .sort(function (a, b) { return b.intersectionRatio - a.intersectionRatio; });
 
         if (visible.length) {
-          const match = sections.find((s) => s.el === visible[0].target);
+          var match = sections.find(function (s) { return s.el === visible[0].target; });
           if (match) setActive(match.link);
         }
       },
       { rootMargin: '-40% 0px -50% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
     );
 
-    sections.forEach((s) => io.observe(s.el));
+    sections.forEach(function (s) { io.observe(s.el); });
   })();
 
-  (function initSmoothScroll() {
-    const anchors = document.querySelectorAll('a[href^="#"]');
+  (function () {
+    var anchors = document.querySelectorAll('a[href^="#"]');
     if (!anchors.length) return;
 
-    const headerOffset = () => {
-      const nav = document.getElementById('nav');
+    var headerOffset = function () {
+      var nav = document.getElementById('nav');
       return (nav ? nav.offsetHeight : 80) + 12;
     };
 
-    anchors.forEach((anchor) => {
-      anchor.addEventListener('click', (event) => {
-        const href = anchor.getAttribute('href');
+    var smoothScrollTo = function (top) {
+      if (prefersReducedMotion) {
+        window.scrollTo(0, top);
+        return;
+      }
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    };
+
+    anchors.forEach(function (anchor) {
+      anchor.addEventListener('click', function (event) {
+        var href = anchor.getAttribute('href');
 
         if (!href || href === '#') {
           event.preventDefault();
@@ -174,31 +174,23 @@
           return;
         }
 
-        let target;
+        var target;
         try {
           target = document.querySelector(href);
-        } catch (_) {
+        } catch (err) {
           return;
         }
 
         if (!target) return;
 
         event.preventDefault();
-        const top = target.getBoundingClientRect().top + window.scrollY - headerOffset();
+        var top = target.getBoundingClientRect().top + window.scrollY - headerOffset();
         smoothScrollTo(Math.max(0, top));
       });
     });
-
-    function smoothScrollTo(top) {
-      if (prefersReducedMotion) {
-        window.scrollTo(0, top);
-        return;
-      }
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
   })();
 
-  (function initTouchClass() {
+  (function () {
     if (window.matchMedia('(hover: none)').matches) {
       document.documentElement.classList.add('is-touch');
     }
